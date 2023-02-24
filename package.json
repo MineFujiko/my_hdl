@@ -74,11 +74,11 @@
         "snippets": [
             {
                 "language": "systemverilog",
-                "path": "./snippets/systemverilog.json"
+                "path": "./snippets/my_verilog.json"
             },
             {
                 "language": "verilog",
-                "path": "./snippets/systemverilog.json"
+                "path": "./snippets/my_verilog.json"
             }
         ],
         "grammars": [

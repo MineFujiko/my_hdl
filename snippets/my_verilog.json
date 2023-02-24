@@ -1,0 +1,244 @@
+{
+    "file header by nc": {
+        "prefix": "header",
+        "body": [
+            "// -------------------------------------------------------------------------------------------------",
+            "// Copyright (c) 2020-$CURRENT_YEAR. All rights reserved.",
+            "// Project    :",
+            "// Filename   :    $TM_FILENAME",
+            "// Author     :    Niechuan",
+            "// Email      :    niechuan.wk@gmail.com",
+            "// Description:",
+            "//",
+            "// ***********************************************************************************************",
+            "// Modification History:",
+            "// Date           By           Revision           Change Description",
+            "// -----------------------------------------------------------------------------------------------",
+            "// $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE                  1.0                origin",
+            "//",
+            "//",
+            "// ***********************************************************************************************",
+            "// Warning:",
+            "// Any bug or new reqirement, please report to the Author.",
+            "// ***********************************************************************************************"
+        ],
+        "description": "file header to text"
+    },
+    "always by nc": {
+        "prefix": "always",
+        "body": [
+            "always_ff@(posedge ${1:clk} or posedge ${2:rst})",
+            "begin",
+            "    if(rst)begin",
+            "        $3 <= '0;",
+            "    end",
+            "    else if($4)begin",
+            "        $3 <= $5;",
+            "    end",
+            "    else begin",
+            "        $3 <= $6;",
+            "    end",
+            "end"
+        ],
+        "description": "always by nc"
+    },
+    "always_n by nc": {
+        "prefix": ["always_n","aln"],
+        "body": [
+            "always_ff@(posedge ${1:clk} or negedge ${2:rstn})",
+            "begin",
+            "    if(!${2:rstn})begin",
+            "        $3 <= '0;",
+            "    end",
+            "    else if($4)begin",
+            "        $3 <= $5;",
+            "    end",
+            "    else begin",
+            "        $3 <= $6;",
+            "    end",
+            "end"
+        ],
+        "description": "always by nc"
+    },
+    "always_ff by nc": {
+        "prefix": ["always_ff","alff"],
+        "body": [
+            "always_ff@(posedge ${1:clk} or posedge ${2:rst})",
+            "begin",
+            "    if(rst)begin",
+            "        $3 <= '0;",
+            "    end",
+            "    else if($4)begin",
+            "        $3 <= $5;",
+            "    end",
+            "    else begin",
+            "        $3 <= $6;",
+            "    end",
+            "end"
+        ],
+        "description": "always by nc"
+    },
+    "always_ff_async by nc": {
+        "prefix": ["always_ff_sync","alffa"],
+        "body": [
+            "always_ff@(posedge ${1:clk})",
+            "begin",
+            "    if($2)begin",
+            "        $3 <= $4;",
+            "    end",
+            "    else begin",
+            "        $3 <= $5;",
+            "    end",
+            "end"
+        ],
+        "description": "always sync by nc"
+    },
+    "pipeline by nc": {
+        "prefix": ["pipeline"],
+        "body": [
+            "logic $1_1d;",
+            "logic $1_2d;",
+            "always_ff@(posedge ${2:clk})",
+            "begin",
+            "    $1_1d <= $1;",
+            "    $1_2d <= $1_1d;",
+            "end"
+        ],
+        "description": "always async rst by nc"
+    },
+    "pos by nc": {
+        "prefix": ["pos"],
+        "body": [
+            "// $1 posedge",
+            "logic $1_1d;",
+            "logic $1_pos;",
+            "",
+            "always_ff@(posedge ${2:clk})",
+            "begin",
+            "    $1_1d <= $1;",
+            "end",
+            "",
+            "assign $1_pos = $1 & (~$1_1d);"
+        ],
+        "description": "pos by nc"
+    },
+    "decalre by nc": {
+        "prefix": "declare",
+        "body": [ 
+            "//The end of declare"
+        ],
+        "description": "decalre by nc "
+    },
+    "assign by nc": {
+        "prefix": "assign",
+        "body": [ 
+            "assign $1 = $2;"
+        ],
+        "description": "assign by nc "
+    },
+    "define by nc": {
+        "prefix": "define",
+        "body": [ 
+            "define    $1    32'h0000_0000;"
+        ],
+        "description": "define by nc"
+    },
+    "generate by nc": {
+        "prefix": "generate",
+        "body": [ 
+            "generate",
+            "    for(genvar i=0;i<$1;i=i+1)",
+            "    begin:u_gen_$2",
+            "    ",
+            "    end",
+            "endgenerate"
+        ],
+        "description": "generate by nc"
+    },
+    "zsk1 by nc": {
+        "prefix": "zsk1",
+        "body": [ 
+            "// ------------------------------------------------------------------------------------------------------------------------",
+            "// $1",
+            "// ------------------------------------------------------------------------------------------------------------------------"
+        ],
+        "description": "zsk1"
+    },
+    "zsk2 by nc": {
+        "prefix": "zsk2",
+        "body": [ 
+            "// --------------------------------------------------------------------------------",
+            "// $1",
+            "// --------------------------------------------------------------------------------"
+        ],
+        "description": "zsk2"
+    },
+    "zsk3 by nc": {
+        "prefix": "zsk3",
+        "body": [ 
+            "// ----------------------------------------",
+            "// $1",
+            "// ----------------------------------------"
+        ],
+        "description": "zsk3"
+    },
+    "zs1 by nc": {
+        "prefix": "zs1",
+        "body": [ 
+            "// ------------------------------------------------------------------------------------------------------------------------"
+        ],
+        "description": "zs1"
+    },
+    "zs2 by nc": {
+        "prefix": "zs2",
+        "body": [ 
+            "// --------------------------------------------------------------------------------"
+        ],
+        "description": "zs2"
+    },
+    "zs3 by nc": {
+        "prefix": "zs3",
+        "body": [ 
+            "// ----------------------------------------"
+        ],
+        "description": "zs3"
+    },
+    "port_in by nc": {
+        "prefix": "pi",
+        "body": [ 
+            "// -<"
+        ],
+        "description": "port_in"
+    },
+    "port_out by nc": {
+        "prefix": "po",
+        "body": [ 
+            "// ->"
+        ],
+        "description": "port_out"
+    },
+    "module by nc": {
+        "prefix": "module",
+        "body": [ 
+            "module $TM_FILENAME_BASE",
+            "#(",
+            "    parameter C_ = $1",
+            ")",
+            "(",
+            "    input                    clk,",
+            "    input                    rst,",
+            "    input    [15:0][ 8:0]    siganl,",
+            "    output                   siganl,",
+            "    output         [ 8:0]    siganl,",
+            "    output   [15:0][ 8:0]    siganl",
+            ");",
+            "",
+            "// ------------------------------------------------------------------------------------------",
+            "// Function: ",
+            "// ------------------------------------------------------------------------------------------",
+            "",
+            "endmodule"
+        ],
+        "description": "module by nc"
+    }
+}
