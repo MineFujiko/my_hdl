@@ -42,6 +42,10 @@ export class SystemVerilogIndexer {
         this.forceFastIndexing = settings.get('systemverilog.forceFastIndexing');
         this.maxLineCountIndexing = settings.get('systemverilog.maxLineCountIndexing');
         this.documentSymbolPrecision = settings.get('systemverilog.documentSymbolsPrecision');
+        // Niechuan
+        // this.outputChannel.appendLine(`NC: test info: ${settings.toString()}`);// get object
+        this.outputChannel.appendLine(`NC: test info: ${this.documentSymbolPrecision.toString()}`);// get object
+
     }
 
     /**
@@ -69,6 +73,9 @@ export class SystemVerilogIndexer {
                         this.building = true;
                         this.symbols = new Map<string, Array<SystemVerilogSymbol>>();
                         const uris: Uri[] = await this.find_files(token);
+                        for (let i = 0; i < uris.length; i++) {
+                            this.outputChannel.appendLine(uris[i].toString());
+                        }
                         console.time('build_index'); // eslint-disable-line no-console
                         for (let filenr = 0; filenr < uris.length; filenr += this.parallelProcessing) {
                             const subset = uris.slice(filenr, filenr + this.parallelProcessing);
