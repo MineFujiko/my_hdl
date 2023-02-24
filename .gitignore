@@ -1,0 +1,13 @@
+/.nyc_output/
+/.vscode-test/
+/coverage/
+/dist/
+/node_modules/
+/out/
+/packages/
+/results.xml
+/src/compiling/ANTLR/grammar/build/
+/syntaxes/systemverilog.tmLanguage.json
+**/.antlr
+*.vsix
+.DS_Store

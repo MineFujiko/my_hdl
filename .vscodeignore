@@ -1,0 +1,28 @@
+.git/
+.nyc_output/
+.vscode/
+.vscode-test/
+build/
+coverage/
+# dist/
+dist/**/*.LICENSE.txt
+dist/**/*.map
+node_modules/
+out/
+# out/test/
+# out/wip/
+resources/*
+!resources/icon.png
+src/
+syntaxes/systemverilog.tmLanguage.yaml
+verilog-examples/
+.gitignore
+.eslintignore
+.eslintrc
+.prettierignore
+.prettierrc
+.vscodeignore
+package-lock.json
+tsconfig.json
+results.xml
+*.vsix

@@ -1,0 +1,9 @@
+.vscode/
+.vscode-test/
+build/
+coverage/
+dist/
+node_modules/
+out/
+src/compiling/ANTLR/grammar
+src/wip/

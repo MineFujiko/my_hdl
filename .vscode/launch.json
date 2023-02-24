@@ -1,0 +1,48 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Extension",
+            "type": "extensionHost",
+            "request": "launch",
+            "runtimeExecutable": "${execPath}",
+            "args": ["--disable-extensions", "--extensionDevelopmentPath=${workspaceRoot}"],
+            "outFiles": ["${workspaceRoot}/dist/client/**/*.js"],
+            "preLaunchTask": {
+                "type": "npm",
+                "script": "webpack:dev"
+            }
+        },
+        {
+            "name": "Attach",
+            "type": "node",
+            "request": "attach",
+            "port": 6009,
+            "restart": true,
+            "outFiles": ["${workspaceRoot}/dist/server/**/*.js"]
+        },
+        {
+            "name": "Extension Tests",
+            "type": "extensionHost",
+            "request": "launch",
+            "runtimeExecutable": "${execPath}",
+            "args": [
+                "--disable-extensions",
+                "--extensionDevelopmentPath=${workspaceRoot}",
+                "--extensionTestsPath=${workspaceRoot}/out/test/index",
+                "${workspaceRoot}/verilog-examples"
+            ],
+            "outFiles": ["${workspaceRoot}/out/test/**/*.js"],
+            "preLaunchTask": {
+                "type": "npm",
+                "script": "compile"
+            }
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Client + Server",
+            "configurations": ["Extension", "Attach"]
+        }
+    ]
+}

@@ -1,0 +1,497 @@
+{
+    "name": "systemverilog",
+    "displayName": "SystemVerilog - Language Support",
+    "description": "Language support for Verilog and SystemVerilog.",
+    "version": "0.13.3",
+    "publisher": "eirikpre",
+    "author": {
+        "name": "Eirik Prestegårdshus",
+        "email": "eirikpre@gmail.com"
+    },
+    "license": "MIT",
+    "categories": [
+        "Programming Languages",
+        "Snippets",
+        "Linters",
+        "Formatters"
+    ],
+    "keywords": [
+        "verilog",
+        "systemverilog",
+        "lsp",
+        "hdl"
+    ],
+    "icon": "resources/icon.png",
+    "galleryBanner": {
+        "color": "#1e415e",
+        "theme": "dark"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/eirikpre/VSCode-SystemVerilog"
+    },
+    "extensionKind": [
+        "workspace"
+    ],
+    "engines": {
+        "vscode": "^1.61.0"
+    },
+    "activationEvents": [
+        "onLanguage:systemverilog",
+        "onLanguage:verilog",
+        "workspaceContains:**/*.{sv,v,svh,vh}"
+    ],
+    "main": "./dist/client/extension",
+    "contributes": {
+        "languages": [
+            {
+                "id": "systemverilog",
+                "aliases": [
+                    "SystemVerilog",
+                    "systemverilog",
+                    "System Verilog",
+                    "Systemverilog"
+                ],
+                "extensions": [
+                    ".sv",
+                    ".svh"
+                ],
+                "configuration": "./language-configuration.json"
+            },
+            {
+                "id": "verilog",
+                "aliases": [
+                    "Verilog",
+                    "verilog"
+                ],
+                "extensions": [
+                    ".v",
+                    ".vh"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "snippets": [
+            {
+                "language": "systemverilog",
+                "path": "./snippets/systemverilog.json"
+            },
+            {
+                "language": "verilog",
+                "path": "./snippets/systemverilog.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "systemverilog",
+                "scopeName": "source.systemverilog",
+                "path": "./syntaxes/systemverilog.tmLanguage.json"
+            },
+            {
+                "language": "verilog",
+                "scopeName": "source.systemverilog",
+                "path": "./syntaxes/systemverilog.tmLanguage.json"
+            },
+            {
+                "scopeName": "markdown.verilog.codeblock",
+                "path": "./syntaxes/codeblock.json",
+                "injectTo": [
+                    "text.html.markdown"
+                ],
+                "embeddedLanguages": {
+                    "meta.embedded.block.systemverilog": "source.systemverilog",
+                    "meta.embedded.block.verilog": "source.verilog"
+                }
+            }
+        ],
+        "configuration": [
+            {
+                "title": "SystemVerilog Language Server",
+                "properties": {
+                    "systemverilog.disableIndexing": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "Disable automatic indexing when opening a folder or workspace."
+                    },
+                    "systemverilog.parallelProcessing": {
+                        "type": "integer",
+                        "default": 10,
+                        "description": "The number of files the extension should attempt to process in parallel. Processing consist of opening found files and perform matching to find symbols."
+                    },
+                    "systemverilog.includeIndexing": {
+                        "type": "array",
+                        "default": [
+                            "**/*.{sv,v,svh,vh}"
+                        ],
+                        "description": "Files included for indexing (glob pattern). Examples: \n  - Include files within the workspace's rtl folder ('*' at front of pattern denotes that path is relative to workspace root): **/rtl/**/*.{sv,v,svh,vh}\n  - Add all files with a '.svp' extension: **/*.svp\n  - Add files only when in a specific workspace: /abs/path/to/workspace/rtl/**/*.{sv,v,svh,vh}"
+                    },
+                    "systemverilog.excludeIndexing": {
+                        "type": "string",
+                        "default": "",
+                        "description": "Files excluded from indexing (glob pattern)."
+                    },
+                    "systemverilog.forceFastIndexing": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "Force indexing to use fast regular expression parsing."
+                    },
+                    "systemverilog.enableIncrementalIndexing": {
+                        "type": "boolean",
+                        "default": true,
+                        "description": "Enable incremental indexation as you open files."
+                    },
+                    "systemverilog.maxLineCountIndexing": {
+                        "type": "integer",
+                        "default": 2000,
+                        "description": "When indexing a file, if the line count is larger than this number, fast indexing will be used to improve symbol lookup performance."
+                    },
+                    "systemverilog.documentSymbolsPrecision": {
+                        "type": "string",
+                        "enum": [
+                            "full",
+                            "full_no_references",
+                            "declaration",
+                            "fast"
+                        ],
+                        "default": "full",
+                        "description": "The level of detail the parser should use when looking for symbols:\n  - 'full': detect blocks, ports, parameters, classes, methods, typedefs, defines, labels, instantiations, assertions, and references\n  - 'full_no_references': detect blocks, ports, parameters, classes, methods, typedefs, defines, labels, instantiations, and assertions\n  - 'declarations': detect blocks, ports, parameters, classes, methods, typedefs, and defines\n  - 'fast': detect only common blocks (module, class, interface, package, program) without hierarchy"
+                    },
+                    "systemverilog.compilerType": {
+                        "type": "string",
+                        "enum": [
+                            "Verilator",
+                            "VCS",
+                            "Verible"
+                        ],
+                        "default": "Verilator",
+                        "description": "Select the compiler type from the drop down list."
+                    },
+                    "systemverilog.excludeCompiling": {
+                        "type": "string",
+                        "default": "",
+                        "description": "Files excluded from compiling (glob pattern)."
+                    },
+                    "systemverilog.launchConfigurationVerilator": {
+                        "type": "string",
+                        "default": "verilator --sv --lint-only --language 1800-2012 --Wall",
+                        "description": "Launch command for running Verilator as the compiler."
+                    },
+                    "systemverilog.launchConfigurationVCS": {
+                        "type": "string",
+                        "default": "vcs",
+                        "description": "Launch command for running VCS as the compiler."
+                    },
+                    "systemverilog.launchConfigurationVerible": {
+                        "type": "string",
+                        "default": "verible-verilog-lint",
+                        "description": "Launch command for running Verible as the compiler."
+                    },
+                    "systemverilog.formatCommand": {
+                        "type": "string",
+                        "default": "verible-verilog-format",
+                        "description": "Launch command for running the formatter."
+                    },
+                    "systemverilog.compileOnSave": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "Compile SystemVerilog/Verilog files when saved."
+                    },
+                    "systemverilog.trace.server": {
+                        "type": "string",
+                        "enum": [
+                            "off",
+                            "messages",
+                            "verbose"
+                        ],
+                        "default": "off",
+                        "description": "Traces the communication between VS Code and the SystemVerilog language server."
+                    },
+                    "systemverilog.antlrVerification": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "Use ANTLR parser to verify text documents when edited."
+                    },
+                    "systemverilog.verifyOnOpen": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "Run ANTLR verification on all files when opened."
+                    },
+                    "systemverilog.compileOnOpen": {
+                      "type": "boolean",
+                      "default": false,
+                      "description": "Compile all files when opened."
+                    }
+                }
+            }
+        ],
+        "commands": [
+            {
+                "command": "systemverilog.build_index",
+                "title": "SystemVerilog: Build index of modules in workspace"
+            },
+            {
+                "command": "systemverilog.auto_instantiate",
+                "title": "SystemVerilog: Auto instantiate modules in workspace"
+            },
+            {
+                "command": "systemverilog.compile",
+                "title": "SystemVerilog: Compile the opened document"
+            }
+        ],
+        "jsonValidation": [
+            {
+                "fileMatch": "tasks.json",
+                "url": "./schemas/tasks.schema.json"
+            }
+        ],
+        "problemMatchers": [
+            {
+                "name": "vlog-error",
+                "owner": "Questasim",
+                "source": "systemverilog",
+                "severity": "error",
+                "fileLocation": "autoDetect",
+                "pattern": [
+                    {
+                        "regexp": "\\*\\* Error: ([^:]*?)\\((\\d+)\\): \\((.*?)\\) (.*)",
+                        "file": 1,
+                        "line": 2,
+                        "code": 3,
+                        "message": 4
+                    }
+                ]
+            },
+            {
+                "name": "vlog-warn",
+                "owner": "Questasim",
+                "source": "systemverilog",
+                "severity": "warning",
+                "fileLocation": "autoDetect",
+                "pattern": [
+                    {
+                        "regexp": "\\*\\* Warning: ([^:]*?)\\((\\d+)\\): \\((.*?)\\) (.*)",
+                        "file": 1,
+                        "line": 2,
+                        "code": 3,
+                        "message": 4
+                    }
+                ]
+            },
+            {
+                "name": "vlog-info",
+                "owner": "Questasim",
+                "source": "systemverilog",
+                "severity": "info",
+                "fileLocation": "autoDetect",
+                "pattern": [
+                    {
+                        "regexp": "\\*\\* (Info|Note \\(downgraded\\)): ([^:]*?)\\((\\d+)\\): \\((.*?)\\) (.*)",
+                        "file": 2,
+                        "line": 3,
+                        "code": 4,
+                        "message": 5
+                    }
+                ]
+            },
+            {
+                "name": "vsim-error",
+                "owner": "Questasim",
+                "source": "systemverilog",
+                "severity": "error",
+                "fileLocation": "autoDetect",
+                "pattern": [
+                    {
+                        "regexp": "\\*\\* Error: (.*)",
+                        "message": 1
+                    },
+                    {
+                        "regexp": ".*? File: (.+?) Line: (\\d+)",
+                        "file": 1,
+                        "line": 2
+                    }
+                ]
+            },
+            {
+                "name": "vsim-warning",
+                "owner": "Questasim",
+                "source": "systemverilog",
+                "severity": "warning",
+                "fileLocation": "autoDetect",
+                "pattern": [
+                    {
+                        "regexp": "\\*\\* Warning: (.*)",
+                        "message": 1
+                    },
+                    {
+                        "regexp": ".*? File: (.+?) Line: (\\d+)",
+                        "file": 1,
+                        "line": 2
+                    }
+                ]
+            },
+            {
+                "name": "vsim-info",
+                "owner": "Questasim",
+                "source": "systemverilog",
+                "severity": "info",
+                "fileLocation": "autoDetect",
+                "pattern": [
+                    {
+                        "regexp": "\\*\\* Info: (.*)",
+                        "message": 1
+                    },
+                    {
+                        "regexp": ".*? File: (.+?) Line: (\\d+)",
+                        "file": 1,
+                        "line": 2
+                    }
+                ]
+            },
+            {
+                "name": "verilator-error",
+                "owner": "Verilator",
+                "source": "systemverilog",
+                "severity": "error",
+                "fileLocation": "autoDetect",
+                "pattern": [
+                    {
+                        "regexp": "%Error(-[A-Z0-9]+)?: ((\\S+):(\\d+):((\\d+):)? )?(.*)$",
+                        "severity": 1,
+                        "file": 2,
+                        "line": 3,
+                        "column": 4,
+                        "message": 5
+                    }
+                ]
+            },
+            {
+                "name": "verilator-warning",
+                "owner": "Verilator",
+                "source": "systemverilog",
+                "severity": "warning",
+                "fileLocation": "autoDetect",
+                "pattern": [
+                    {
+                        "regexp": "%Warning(-[A-Z0-9]+)?: ((\\S+):(\\d+):((\\d+):)? )?(.*)$",
+                        "severity": 1,
+                        "file": 2,
+                        "line": 3,
+                        "column": 4,
+                        "message": 5
+                    }
+                ]
+            },
+            {
+                "name": "verible-error",
+                "owner": "Verible",
+                "source": "systemverilog",
+                "severity": "error",
+                "fileLocation": "autoDetect",
+                "pattern": [
+                    {
+                        "regexp": "^(.+?):(\\d+):(\\d+):\\s+(.+?)\\s+\\(https://github\\.com/google/verible\\)\\.$",
+                        "file": 1,
+                        "line": 2,
+                        "column": 3,
+                        "message": 4
+                    }
+                ]
+            },
+            {
+                "name": "verible-warning",
+                "owner": "Verible",
+                "source": "systemverilog",
+                "severity": "warning",
+                "fileLocation": "autoDetect",
+                "pattern": [
+                    {
+                        "regexp": "^(.+?):(\\d+):(\\d+):\\s+(.+?)\\s+\\[(Style:\\s+[-\\w]+)\\]\\s+\\[([-\\w]+)\\]$",
+                        "file": 1,
+                        "line": 2,
+                        "column": 3,
+                        "message": 4
+                    }
+                ]
+            },
+            {
+                "name": "verible-info",
+                "owner": "Verible",
+                "source": "systemverilog",
+                "severity": "info",
+                "fileLocation": "autoDetect",
+                "pattern": [
+                    {
+                        "regexp": "^(.+?):(\\d+):(\\d+):\\s+(.+?)\\s+\\[(Style:\\s+[-\\w]+)\\]\\s+\\[([-\\w]+)\\]$",
+                        "file": 1,
+                        "line": 2,
+                        "column": 3,
+                        "message": 4
+                    }
+                ]
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile && npm run webpack",
+        "compile": "npm run yj && npm run compile:antlr4ts && tsc --project ./",
+        "yj": "js-yaml ./syntaxes/systemverilog.tmLanguage.yaml >./syntaxes/systemverilog.tmLanguage.json",
+        "compile:antlr4ts": "antlr4ts -visitor -Xexact-output-dir -o ./src/compiling/ANTLR/grammar/build ./src/compiling/ANTLR/grammar/SystemVerilog.g4",
+        "webpack": "webpack --mode production --config ./build/client.webpack.config.js && webpack --mode production --config ./build/server.webpack.config.js",
+        "webpack:dev": "webpack --mode none --config ./build/client.webpack.config.js && webpack --mode none --config ./build/server.webpack.config.js",
+        "watch": "tsc --watch --project ./",
+        "test": "npm run compile && node ./out/test/runTest.js",
+        "test:coverage": "npm run compile && node ./out/test/runTest.js -coverage",
+        "coverage": "nyc --silent npm run test:coverage",
+        "lint": "eslint --config ./.eslintrc.json --ext .ts ./src",
+        "pretty": "prettier --write \"**/*\"",
+        "pretty:check": "prettier --check \"**/*.ts\"",
+        "clean": "npx rimraf dist/ out/ .vscode-test/"
+    },
+    "devDependencies": {
+        "@istanbuljs/nyc-config-typescript": "^1.0.2",
+        "@types/glob": "^7.2.0",
+        "@types/mocha": "^9.1.0",
+        "@types/node": "^14.18.12",
+        "@types/vscode": "^1.61.0",
+        "@typescript-eslint/eslint-plugin": "^5.14.0",
+        "@typescript-eslint/parser": "^5.14.0",
+        "@vscode/test-electron": "^1.6.2",
+        "antlr4ts-cli": "^0.5.0-alpha.4",
+        "eslint": "^8.11.0",
+        "eslint-config-airbnb-base": "15.0.0",
+        "eslint-config-airbnb-typescript": "^16.1.2",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-plugin-import": "^2.25.4",
+        "eslint-plugin-prettier": "^4.0.0",
+        "js-yaml": "^4.1.0",
+        "languages": "0.1.3",
+        "merge-options": "^3.0.4",
+        "mocha": "^9.2.2",
+        "mocha-multi-reporters": "^1.5.1",
+        "nyc": "^15.1.0",
+        "prettier": "^2.5.1",
+        "source-map-support": "^0.5.21",
+        "ts-loader": "^9.2.8",
+        "ts-node": "^10.7.0",
+        "typescript": "^4.6.2",
+        "webpack": "^5.70.0",
+        "webpack-cli": "^4.9.2"
+    },
+    "dependencies": {
+        "antlr4ts": "^0.5.0-alpha.4",
+        "child_process": "^1.0.2",
+        "glob": "^7.2.0",
+        "glob-to-regexp": "^0.4.1",
+        "minimatch": "^3.1.2",
+        "uri-js": "^4.4.1",
+        "vscode-languageclient": "^7.0.0",
+        "vscode-languageserver": "^7.0.0",
+        "vscode-languageserver-textdocument": "^1.0.4"
+    },
+    "__metadata": {
+        "id": "3788d090-07a9-4840-9cf7-cd455e906cf0",
+        "publisherDisplayName": "Eirik Prestegårdshus",
+        "publisherId": "f9c1f1d6-09c5-489a-b8ac-a8a96b90a5ab",
+        "isPreReleaseVersion": false
+    }
+}
