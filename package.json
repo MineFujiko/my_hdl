@@ -2,11 +2,11 @@
     "name": "systemverilog",
     "displayName": "SystemVerilog - Language Support",
     "description": "Language support for Verilog and SystemVerilog.",
-    "version": "0.13.3",
-    "publisher": "eirikpre",
+    "version": "0.1.0",
+    "publisher": "niechuan",
     "author": {
-        "name": "Eirik Prestegårdshus",
-        "email": "eirikpre@gmail.com"
+        "name": "Niechuan",
+        "email": "niechuanhm@gmail.com"
     },
     "license": "MIT",
     "categories": [
@@ -21,14 +21,11 @@
         "lsp",
         "hdl"
     ],
-    "icon": "resources/icon.png",
     "galleryBanner": {
         "color": "#1e415e",
         "theme": "dark"
     },
     "repository": {
-        "type": "git",
-        "url": "https://github.com/eirikpre/VSCode-SystemVerilog"
     },
     "extensionKind": [
         "workspace"
@@ -108,6 +105,166 @@
             {
                 "title": "SystemVerilog Language Server",
                 "properties": {
+                    "verilog.linting.path": {
+                        "scope": "window",
+                        "type": "string",
+                        "default": "",
+                        "description": "A path to the installation of linter."
+                    },
+                    "verilog.linting.linter": {
+                        "scope": "window",
+                        "type": "string",
+                        "enum": [
+                            "xvlog",
+                            "iverilog",
+                            "verilator",
+                            "modelsim",
+                            "slang",
+                            "none"
+                        ],
+                        "default": "none",
+                        "description": "Select the verilog linter. Possible values are 'iverilog', 'verilator', 'modelsim', 'xvlog', 'slang' or 'none'."
+                    },
+                    "verilog.linting.iverilog.arguments": {
+                        "scope": "window",
+                        "type": "string",
+                        "default": "",
+                        "description": "Add Icarus Verilog arguments here (like macros). They will be added to Icarus Verilog while linting (The command \"-t null\" will be added by the linter by default)."
+                    },
+                    "verilog.linting.iverilog.includePath": {
+                        "scope": "window",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "uniqueItems": true,
+                        "description": "A list of directory paths to use while Icarus Verilog linting."
+                    },
+                    "verilog.linting.iverilog.verilogHDL.standard": {
+                        "scope": "window",
+                        "type": "string",
+                        "enum": [
+                            "Verilog-95",
+                            "Verilog-2001",
+                            "Verilog-2005"
+                        ],
+                        "enumDescriptions": [
+                            "IEEE1364-1995, specified by -g1995 option in Icarus Verilog",
+                            "IEEE1364-2001, specified by -g2001 option in Icarus Verilog",
+                            "IEEE1364-2005, specified by -g2005 option in Icarus Verilog"
+                        ],
+                        "default": "Verilog-2005",
+                        "description": "Select the standard rule to be used when Icarus Verilog linting for Verilog-HDL files."
+                    },
+                    "verilog.linting.iverilog.systemVerilog.standard": {
+                        "scope": "window",
+                        "type": "string",
+                        "enum": [
+                            "SystemVerilog2005",
+                            "SystemVerilog2009",
+                            "SystemVerilog2012"
+                        ],
+                        "enumDescriptions": [
+                            "IEEE1800-2005, specified by -g2005-sv option in Icarus Verilog",
+                            "IEEE1800-2009, specified by -g2009 option in Icarus Verilog",
+                            "IEEE1800-2012, specified by -g2012 option in Icarus Verilog"
+                        ],
+                        "default": "SystemVerilog2012",
+                        "description": "Select the standard rule to be used when Icarus Verilog linting for SystemVerilog files."
+                    },
+                    "verilog.linting.iverilog.runAtFileLocation": {
+                        "scope": "window",
+                        "type": "boolean",
+                        "default": false,
+                        "description": "If enabled, Icarus Verilog will be run at the file location for linting. Else it will be run at workspace folder. Disabled by default."
+                    },
+                    "verilog.linting.modelsim.runAtFileLocation": {
+                        "scope": "window",
+                        "type": "boolean",
+                        "default": false,
+                        "description": "If enabled, Modelsim will be run at the file location for linting. Else it will be run at workspace folder. Disabled by default."
+                    },
+                    "verilog.linting.modelsim.arguments": {
+                        "scope": "window",
+                        "type": "string",
+                        "default": "",
+                        "description": "Add Modelsim arguments here. They will be added to Modelsim while linting."
+                    },
+                    "verilog.linting.modelsim.work": {
+                        "scope": "window",
+                        "type": "string",
+                        "default": "",
+                        "description": "Add Modelsim work library here."
+                    },
+                    "verilog.linting.slang.arguments": {
+                        "scope": "window",
+                        "type": "string",
+                        "default": "",
+                        "description": "Add Slang arguments here (like macros). They will be added to Slang while linting (The command \"-I=<document folder>\" will be added by the linter by default)."
+                    },
+                    "verilog.linting.slang.includePath": {
+                        "scope": "window",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "uniqueItems": true,
+                        "description": "A list of directory paths to use while Slang linting."
+                    },
+                    "verilog.linting.slang.runAtFileLocation": {
+                        "scope": "window",
+                        "type": "boolean",
+                        "default": false,
+                        "description": "If enabled, Slang will be run at the file location for linting. Else it will be run at workspace folder. Disabled by default."
+                    },
+                    "verilog.linting.slang.useWSL": {
+                        "scope": "window",
+                        "type": "boolean",
+                        "default": false,
+                        "description": "If enabled, run slang in WSL."
+                    },
+                    "verilog.linting.verilator.arguments": {
+                        "scope": "window",
+                        "type": "string",
+                        "default": "",
+                        "description": "Add Verilator arguments here (like macros). They will be added to Verilator while linting (The command \"--lint-only -I<document folder>\" will be added by the linter by default)."
+                    },
+                    "verilog.linting.verilator.includePath": {
+                        "scope": "window",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "uniqueItems": true,
+                        "description": "A list of directory paths to use while Verilator linting."
+                    },
+                    "verilog.linting.verilator.runAtFileLocation": {
+                        "scope": "window",
+                        "type": "boolean",
+                        "default": false,
+                        "description": "If enabled, Verilator will be run at the file location for linting. Else it will be run at workspace folder. Disabled by default."
+                    },
+                    "verilog.linting.verilator.useWSL": {
+                        "scope": "window",
+                        "type": "boolean",
+                        "default": false,
+                        "description": "If enabled, run verilator in WSL."
+                    },
+                    "verilog.linting.xvlog.arguments": {
+                        "scope": "window",
+                        "type": "string",
+                        "default": "",
+                        "description": "Add xvlog arguments here. They will be added to xvlog while linting."
+                    },
+                    "verilog.linting.xvlog.includePath": {
+                        "scope": "window",
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "uniqueItems": true,
+                        "description": "A list of directory paths to use while xvlog linting."
+                    },
                     "systemverilog.disableIndexing": {
                         "type": "boolean",
                         "default": false,
@@ -217,9 +374,9 @@
                         "description": "Run ANTLR verification on all files when opened."
                     },
                     "systemverilog.compileOnOpen": {
-                      "type": "boolean",
-                      "default": false,
-                      "description": "Compile all files when opened."
+                        "type": "boolean",
+                        "default": false,
+                        "description": "Compile all files when opened."
                     }
                 }
             }
@@ -236,6 +393,10 @@
             {
                 "command": "systemverilog.compile",
                 "title": "SystemVerilog: Compile the opened document"
+            },
+            {
+                "command": "verilog.lint",
+                "title": "Verilog: Rerun lint tool"
             }
         ],
         "jsonValidation": [
@@ -452,7 +613,7 @@
         "@types/glob": "^7.2.0",
         "@types/mocha": "^9.1.0",
         "@types/node": "^14.18.12",
-        "@types/vscode": "^1.61.0",
+        "@types/vscode": "^1.74.0",
         "@typescript-eslint/eslint-plugin": "^5.14.0",
         "@typescript-eslint/parser": "^5.14.0",
         "@vscode/test-electron": "^1.6.2",

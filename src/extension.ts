@@ -1,4 +1,4 @@
-import { workspace, window, languages, commands, StatusBarAlignment, DocumentSelector, ExtensionContext, ProgressLocation, Location, Range, Uri } from 'vscode'; // prettier-ignore
+import { workspace, window, languages, commands, StatusBarAlignment, DocumentSelector, ExtensionContext, ProgressLocation, Location, Range, Uri,LogOutputChannel } from 'vscode'; // prettier-ignore
 import { LanguageClient, ServerOptions, TransportKind, LanguageClientOptions } from 'vscode-languageclient/node';
 import * as path from 'path';
 import { SystemVerilogDefinitionProvider } from './providers/DefinitionProvider';
@@ -12,6 +12,13 @@ import { SystemVerilogParser } from './parser';
 import { SystemVerilogIndexer } from './indexer';
 import { SystemVerilogSymbol } from './symbol';
 
+// xvlog mergein
+// import * as vscode from 'vscode';
+import LintManager from './linter/LintManager';
+
+// ------------------------------------------------------------------------------------------------------------------------
+// sverilog ext
+// ------------------------------------------------------------------------------------------------------------------------
 // The LSP's client
 let client: LanguageClient;
 
@@ -43,7 +50,23 @@ function saveIndex(context: ExtensionContext): void {
     context.workspaceState.update('symbols', syms);
 }
 
+// ------------------------------------------------------------------------------------------------------------------------
+// verilog ext
+// ------------------------------------------------------------------------------------------------------------------------
+export var logger: LogOutputChannel; // Global logger
+
+let lintManager: LintManager;
+
+// ------------------------------------------------------------------------------------------------------------------------
+// 入口文件
+// ------------------------------------------------------------------------------------------------------------------------
 export function activate(context: ExtensionContext) {
+    logger = window.createOutputChannel('Verilog', { log: true });
+ 
+    // Register command for manual linting
+    lintManager = new LintManager(logger);
+    commands.registerCommand('verilog.lint', lintManager.runLintTool, lintManager);
+// ------------------------------------------------------------------------------------------------------------------------
     // Output Channel
     const outputChannel = window.createOutputChannel('SystemVerilog');
 
