@@ -11,6 +11,8 @@ import { SystemVerilogModuleInstantiator } from './providers/ModuleInstantiator'
 import { SystemVerilogParser } from './parser';
 import { SystemVerilogIndexer } from './indexer';
 import { SystemVerilogSymbol } from './symbol';
+// more
+import { autoDeclare } from './more/autoDelare';
 
 // xvlog mergein
 // import * as vscode from 'vscode';
@@ -108,6 +110,9 @@ export function activate(context: ExtensionContext) {
     context.subscriptions.push(commands.registerCommand('systemverilog.build_index', buildHandler));
     context.subscriptions.push(commands.registerCommand('systemverilog.auto_instantiate', instantiateHandler));
     context.subscriptions.push(commands.registerCommand('systemverilog.compile', compileOpenedDocument));
+
+    // More function实现
+    context.subscriptions.push(commands.registerCommand('verilog.auto_declaration',autoDeclare))
 
     // Background Processes
     context.subscriptions.push(

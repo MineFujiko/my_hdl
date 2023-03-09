@@ -397,6 +397,17 @@
             {
                 "command": "verilog.lint",
                 "title": "Verilog: Rerun lint tool"
+            },
+            {
+                "command": "verilog.auto_declaration",
+                "title": "Verilog: auto declaration"
+            }
+        ],
+        "keybindings":[
+            {
+                "command": "verilog.auto_declaration",
+                "key": "alt+q",
+                "when": "editorTextFocus"
             }
         ],
         "jsonValidation": [
