@@ -49,7 +49,7 @@ function declareGen(e:TextEditor, d:TextDocument, declareType:string, portText:s
         Window.showInformationMessage('仅支持二维数组的声明，请重新输入。');
     }
     //logic [7:0][31:0] 
-    let declareText :string = declareType + '    '+ portOut + '    '+targetText+';\n';
+    let declareText :string = '    ' + declareType + '    '+ portOut + '    '+targetText+';\n';
     //console.log('declareText:' + declareText);
     vscode.window.showInformationMessage(declareText);
     return declareText;
@@ -106,7 +106,7 @@ function writeDeclare(e:TextEditor,declaration:string){
         // itterate through the selections and convert all text to Upper
             let xxx = declaration;
 			
-            edit.insert(new Position(lineNumLocked,0),'\n');
+            // edit.insert(new Position(lineNumLocked,0),'\n');
             edit.replace(new Position(lineNumLocked-1,0),xxx);
 
 		});
