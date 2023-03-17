@@ -2,7 +2,7 @@
     "name": "myhdl",
     "displayName": "myhdl",
     "description": "Language support for Verilog and SystemVerilog.",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "publisher": "niechuan",
     "author": {
         "name": "Niechuan",
@@ -31,7 +31,7 @@
         "workspace"
     ],
     "engines": {
-        "vscode": "^1.61.0"
+        "vscode": "^1.74.0"
     },
     "activationEvents": [
         "onLanguage:systemverilog",
@@ -401,6 +401,10 @@
             {
                 "command": "verilog.auto_declaration",
                 "title": "Verilog: auto declaration"
+            },
+            {
+                "command": "verilog.align_auto",
+                "title": "Verilog: align auto"
             }
         ],
         "keybindings":[
@@ -624,7 +628,7 @@
         "@types/glob": "^7.2.0",
         "@types/mocha": "^9.1.0",
         "@types/node": "^14.18.12",
-        "@types/vscode": "^1.61.0",
+        "@types/vscode": "^1.74.0",
         "@typescript-eslint/eslint-plugin": "^5.14.0",
         "@typescript-eslint/parser": "^5.14.0",
         "@vscode/test-electron": "^1.6.2",

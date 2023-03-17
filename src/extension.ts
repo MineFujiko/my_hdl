@@ -13,6 +13,7 @@ import { SystemVerilogIndexer } from './indexer';
 import { SystemVerilogSymbol } from './symbol';
 // more
 import { autoDeclare } from './more/autoDelare';
+import { alignAuto } from './more/alignAuto';
 
 // xvlog mergein
 // import * as vscode from 'vscode';
@@ -112,7 +113,8 @@ export function activate(context: ExtensionContext) {
     context.subscriptions.push(commands.registerCommand('systemverilog.compile', compileOpenedDocument));
 
     // More function实现
-    context.subscriptions.push(commands.registerCommand('verilog.auto_declaration',autoDeclare))
+    context.subscriptions.push(commands.registerCommand('verilog.auto_declaration',autoDeclare));
+    context.subscriptions.push(commands.registerCommand('verilog.align_auto',alignAuto));
 
     // Background Processes
     context.subscriptions.push(
